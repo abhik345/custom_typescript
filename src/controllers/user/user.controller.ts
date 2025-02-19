@@ -10,7 +10,6 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
         message: "Username, email, password, and roleId are required.",
       });
       return;
-        return;
     }
 
     // Check if email is already in use
@@ -27,7 +26,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     res.status(201).json({
       status: 201,
       message: "User created successfully.",
-      user: {
+      data: {
         id: newUser.id,
         username: newUser.username,
         email: newUser.email,
@@ -41,8 +40,6 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     });
   }
 };
-
-
 
 export const getAllUsers = async (req : Request,res : Response) : Promise<void> => {
     try {
@@ -72,7 +69,6 @@ export const getAllUsers = async (req : Request,res : Response) : Promise<void> 
     }
 
 }
-
 
 /**
  * @function getUserById

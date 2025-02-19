@@ -66,7 +66,7 @@ export const getAllRoles = async (
  * Request<ParamsDictionary, ResBody, ReqBody, Query>
  */
 export const updateRoleById = async (
-  req: Request<{ id: string }, {}, { role_name: string }>,
+  req: Request<{ id: number }, {}, { role_name: string }>,
   res: Response
 ): Promise<void> => {
   try {
@@ -88,7 +88,7 @@ export const updateRoleById = async (
       return;
     }
 
-    const role: Role | null = await Role.findByPk(Number(id));
+    const role: Role | null = await Role.findByPk(id);
 
     if (!role) {
       res.status(404).json({
@@ -98,7 +98,7 @@ export const updateRoleById = async (
       return;
     }
 
-    role.role_name = role_name;
+    if(role) role.role_name = role_name;
     await role.save();
 
     res.status(200).json({
