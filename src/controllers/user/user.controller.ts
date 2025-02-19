@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../../models/user.model";
+import  Role  from "../../models/role.model";
 
 export const createUser = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -44,9 +45,8 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 export const getAllUsers = async (req : Request,res : Response) : Promise<void> => {
     try {
         const users : User[] = await User.findAll({
-            attributes : {
-                exclude : ["createAt","updatedAt"]
-            }
+          attributes: { exclude: ["roleId","password", "createdAt", "updatedAt"] },
+          include: [{ model: Role, as: "role", attributes: ["id","role_name"] }],
         })
         if(users.length === 0) {
             res.status(404).json({
@@ -55,7 +55,6 @@ export const getAllUsers = async (req : Request,res : Response) : Promise<void> 
             })
             return;
         }
-
         res.status(200).json({
             status : 200,
             message : "user found",
@@ -80,7 +79,10 @@ export const getAllUsers = async (req : Request,res : Response) : Promise<void> 
 export const getUserById = async (req: Request<{id: number}, {}, {}>, res: Response): Promise<void> => {
     try {
         const {id} = req.params;
-        const user: User | null = await User.findByPk(id);
+        const user: User | null = await User.findByPk(id,{
+          attributes: { exclude: ["roleId","password", "createdAt", "updatedAt"] },
+          include: [{ model: Role, as: "role", attributes: ["id","role_name"] }],
+        });
         if(!user){
             res.status(404).json({
                 status : 404,

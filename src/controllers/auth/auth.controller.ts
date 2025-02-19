@@ -14,7 +14,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const user: User | null = await User.findOne({ where: email });
+    const user: User | null = await User.findOne({ where: {email} });
 
     if (!user) {
       res.status(404).json({
@@ -73,7 +73,7 @@ export const register = async (req : Request,res : Response) : Promise<void> => 
             })
             return;
         }
-        const existingUser : User | null = await User.findOne({where : email});
+        const existingUser : User | null = await User.findOne({where : {email}});
         if(existingUser){
             res.status(400).json({
                 status : 400,

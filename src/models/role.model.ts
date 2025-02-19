@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from "../config/database";
+import User from "./user.model";
 
 interface RoleAttributes {
   id: number;
@@ -32,5 +33,6 @@ Role.init(
     timestamps: true,
   }
 );
+
 
 export default Role;
