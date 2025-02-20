@@ -10,12 +10,12 @@ const grandchildcategoryIncludeOptions = {
     {
       model: ChildCategory,
       as: "childCategory",
-      attributes: { exclude: ["createdAt", "updatedAt"] },
+      attributes: { exclude: ["subCategoryId","createdAt", "updatedAt"] },
       include: [
         {
           model: SubCategory,
           as: "subCategory",
-          attributes: { exclude: ["createdAt", "updatedAt"] },
+          attributes: { exclude: ["categoryId","createdAt", "updatedAt"] },
           include: [
             {
               model: Category,
@@ -72,7 +72,7 @@ export const getGrandChildCategoryById = async (req: Request, res: Response) => 
 export const updateGrandChildCategoryById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const updateData = req.body;
+    const updateData : Partial<{grand_child_category_name : string, childCategoryId : number}> = req.body;
 
     const grandChildCategory = await GrandChildCategory.findByPk(id);
     if (!grandChildCategory) return (res as any).handleResponse(404, "Grand Child Category not found");
