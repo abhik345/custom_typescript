@@ -1,2 +1,8 @@
 
 npm i --save-dev @types/jsonwebtoken
+
+
+
+
+npm run build then upload the whole structure in cpanel then delete the src file in the node instance run npm install and also then copy the entire thing to the root file 
+the server will work also add teh enviroment variable
