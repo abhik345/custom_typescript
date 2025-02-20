@@ -1,3 +1,4 @@
+import { verifyToken } from './../../../middlewares/verifyToken';
 
 import {Router} from "express";
 import {createUser,getAllUsers,getUserById,updateUserById,deleteById} from "../../../controllers/user/user.controller"
@@ -5,11 +6,11 @@ import {createUser,getAllUsers,getUserById,updateUserById,deleteById} from "../.
 const router = Router();
 
 
-router.post("/create",createUser);
-router.get("/get-all",getAllUsers);
-router.get("/get-all/:id",getUserById);
-router.put("/update/:id",updateUserById);
-router.delete("/delete/:id",deleteById);
+router.post("/create",verifyToken,createUser);
+router.get("/get-all",verifyToken,getAllUsers);
+router.get("/get-all/:id",verifyToken,getUserById);
+router.put("/update/:id",verifyToken,updateUserById);
+router.delete("/delete/:id",verifyToken,deleteById);
 
 
 

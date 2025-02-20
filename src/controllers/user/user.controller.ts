@@ -76,7 +76,7 @@ export const getAllUsers = async (req : Request,res : Response) : Promise<void> 
  * @param {Response} res - Express response object.
  * @returns {Promise<void>} A Promise that resolves to nothing.
  */
-export const getUserById = async (req: Request<{id: number}, {}, {}>, res: Response): Promise<void> => {
+export const getUserById = async (req: Request<{id?: number}, {}, {}>, res: Response): Promise<void> => {
     try {
         const {id} = req.params;
         const user: User | null = await User.findByPk(id,{
@@ -105,7 +105,7 @@ export const getUserById = async (req: Request<{id: number}, {}, {}>, res: Respo
 
 
 export const updateUserById = async (
-    req: Request<{ id: number }, {}, { username?: string; email?: string; password?: string; roleId?: number }>,
+    req: Request<{ id?: number }, {}, { username?: string; email?: string; password?: string; roleId?: number }>,
     res: Response
   ): Promise<void> => {
     try {
@@ -147,7 +147,7 @@ export const updateUserById = async (
  * @returns A Promise that resolves to void.
  */
 export const deleteById = async (
-    req: Request<{ id: number }, {}, {}>,
+    req: Request<{ id?: number }, {}, {}>,
     res: Response
 ): Promise<void> => {
     try {
