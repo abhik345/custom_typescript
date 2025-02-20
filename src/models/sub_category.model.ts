@@ -50,7 +50,6 @@ SubCategory.init(
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isUrl: { msg: "Image URL must be a valid URL." },
                 notEmpty: { msg: "Image URL cannot be empty." }
             }
         },
