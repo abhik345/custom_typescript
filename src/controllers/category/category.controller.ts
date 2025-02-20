@@ -1,6 +1,5 @@
 import {Request,Response} from "express";
 import Category from "../../models/category.model";
-import { stat } from "fs";
 
 
 
@@ -91,7 +90,7 @@ export const getCategoryById = async (req:Request,res : Response) : Promise<void
 
 export const updateCategoryById = async (
   req: Request<
-    { id: number },
+    { id?: number },
     {},
     {
       category_name?: string;
@@ -104,8 +103,6 @@ export const updateCategoryById = async (
 ) : Promise<void> => {
   try {
     const { id } = req.params;
-    const { category_name, category_description, imageUrl, status } = req.body;
-
     const updateData : Partial<{category_name : string,category_description : string,imageUrl : string,status : boolean}> = req.body;
 
     const category: Category | null = await Category.findByPk(id, {
@@ -119,6 +116,14 @@ export const updateCategoryById = async (
       });
       return;
     }
+
+    await category.update(updateData);
+
+    res.status(200).json({
+      status: 200,
+      message: "Category updated successfully",
+      data: category,
+    });
   } catch (error: any) {
     res.status(500).json({
       status: 500,
@@ -126,3 +131,30 @@ export const updateCategoryById = async (
     });
   }
 };
+
+export const deleteCategoryById = async (req: Request,res :Response) : Promise<void> => {
+    try {
+        const {id} = req.params;
+
+        const category : Category | null = await Category.findByPk(id);
+        if(!category){
+            res.status(404).json({
+                status : 404,
+                message : "Category not found"
+            })
+            return;
+        }
+
+        await category.destroy();
+        res.status(200).json({
+            status : 200,
+            message : "Category deleted successfully"
+        })
+    } catch (error : any) {
+        res.status(500).json({
+            status : 500,
+            message : error.message
+        })
+        
+    }
+}
