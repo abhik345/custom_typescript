@@ -48,7 +48,8 @@ Category.init(
             allowNull: false,
             validate: {
                 notEmpty: { msg: "Image URL cannot be empty" },
-            }
+            },
+            onDelete: "CASCADE"
         },
         status: {
             type: DataTypes.BOOLEAN,
