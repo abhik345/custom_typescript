@@ -4,7 +4,8 @@ import userRoutes from "./user/user.route";
 import authRoutes from "./auth/auth.route";
 import categoryRoutes from "./category/category.route";
 import subCategoryRoutes from "./sub-category/sub_category.route";
-import childCategoryRoutes from "./child-category/child_category.route"
+import childCategoryRoutes from "./child-category/child_category.route";
+import grandChildCtaegoryRoute from "./grand-child-category/grand_child_category.route"
 
 const router = Router();
 
@@ -16,6 +17,7 @@ router.use("/auth",authRoutes);
 router.use("/categories",categoryRoutes);
 router.use("/sub-categories",subCategoryRoutes);
 router.use("/child-categories",childCategoryRoutes);
+router.use("/grand-child-categories",grandChildCtaegoryRoute);
 
 
 export default router;
