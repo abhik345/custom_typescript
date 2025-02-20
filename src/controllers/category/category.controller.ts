@@ -1,5 +1,7 @@
 import {Request,Response} from "express";
 import Category from "../../models/category.model";
+import fs from 'fs';
+import path from 'path';
 
 
 
@@ -144,7 +146,13 @@ export const deleteCategoryById = async (req: Request,res :Response) : Promise<v
             })
             return;
         }
-
+        if(category.imageUrl){
+            const imageFilename = path.basename(category.imageUrl);
+            const imagePath = path.join(__dirname, '..', '..', 'uploads', imageFilename);
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+        }
         await category.destroy();
         res.status(200).json({
             status : 200,
