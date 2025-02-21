@@ -30,7 +30,7 @@ const grandchildcategoryIncludeOptions = {
 };
 
 
-export const createGrandChildCategory = async (req: Request, res: Response) => {
+export const createGrandChildCategory = async (req: Request, res: Response):Promise<void> => {
   try {
     const { grand_child_category_name, childCategoryId } = req.body;
 
@@ -45,9 +45,9 @@ export const createGrandChildCategory = async (req: Request, res: Response) => {
   }
 };
 
-export const getGrandChildCategories = async (req: Request, res: Response) => {
+export const getGrandChildCategories = async (req: Request, res: Response) : Promise<void> => {
   try {
-    const grandChildCategories = await GrandChildCategory.findAll(grandchildcategoryIncludeOptions);
+    const grandChildCategories : GrandChildCategory[] = await GrandChildCategory.findAll(grandchildcategoryIncludeOptions);
     if (!grandChildCategories.length) {
       return (res as any).handleResponse(404, "No grandchild categories found");
     }
@@ -57,10 +57,10 @@ export const getGrandChildCategories = async (req: Request, res: Response) => {
   }
 };
 
-export const getGrandChildCategoryById = async (req: Request, res: Response) => {
+export const getGrandChildCategoryById = async (req: Request<{ id?: number }>, res: Response) : Promise<void> => {
   try {
     const { id } = req.params;
-    const grandChildCategory = await GrandChildCategory.findByPk(id, grandchildcategoryIncludeOptions);
+    const grandChildCategory : GrandChildCategory | null = await GrandChildCategory.findByPk(id, grandchildcategoryIncludeOptions);
 
     if (!grandChildCategory) return (res as any).handleResponse(404, "Grand Child Category not found");
     (res as any).handleResponse(200, "Grand Child Category found", grandChildCategory);
@@ -69,12 +69,12 @@ export const getGrandChildCategoryById = async (req: Request, res: Response) => 
   }
 };
 
-export const updateGrandChildCategoryById = async (req: Request, res: Response) => {
+export const updateGrandChildCategoryById = async (req: Request<{ id?: number }>, res: Response) : Promise<void> => {
   try {
     const { id } = req.params;
     const updateData : Partial<{grand_child_category_name : string, childCategoryId : number}> = req.body;
 
-    const grandChildCategory = await GrandChildCategory.findByPk(id);
+    const grandChildCategory : GrandChildCategory | null = await GrandChildCategory.findByPk(id);
     if (!grandChildCategory) return (res as any).handleResponse(404, "Grand Child Category not found");
 
     await grandChildCategory.update(updateData);
@@ -84,10 +84,10 @@ export const updateGrandChildCategoryById = async (req: Request, res: Response) 
   }
 };
 
-export const deleteGrandChildCategoryById = async (req: Request, res: Response) => {
+export const deleteGrandChildCategoryById = async (req: Request<{ id?: number }>, res: Response) : Promise<void> => {
   try {
     const { id } = req.params;
-    const grandChildCategory = await GrandChildCategory.findByPk(id);
+    const grandChildCategory : GrandChildCategory | null = await GrandChildCategory.findByPk(id);
     if (!grandChildCategory) return (res as any).handleResponse(404, "Grand Child Category not found");
 
     await grandChildCategory.destroy();
