@@ -4,7 +4,8 @@ import Category from "./category.model";
 import SubCategory from "./sub_category.model";
 import ChildCategory from "./child_category.model";
 import GrandChildCategory from "./grand_child_category.model";
-import Color from "./color.model"
+import Color from "./color.model";
+import Fabric from "./fabric.model";
 
 
 const initModels = async () => {
@@ -15,6 +16,7 @@ const initModels = async () => {
     await ChildCategory.sync({alter: true});
     await GrandChildCategory.sync({alter: true});
     await Color.sync({alter: true});
+    await Fabric.sync({alter: true});
 }
 
 
